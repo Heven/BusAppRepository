@@ -14,3 +14,5 @@ public class MoreActivity extends Activity {
 
 
 /*  ≤‚ ‘ «∑Ògit≥…π¶*/
+
+/* test which one do work. egit or wgit?*/
