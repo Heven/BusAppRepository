@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/line_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="9dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/linename"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3.0"
+            android:ems="10"
+            android:hint="45路"
+            android:layout_marginTop="5dp"
+            android:singleLine="true">
+        </EditText>
+
+        <Button
+            android:id="@+id/linesearch"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1.0"
+            android:text="查找" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lineresult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="22dp"
+        android:textStyle="bold" 
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/linetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
+        android:textSize="16dp" >
+    </TextView>
+
+<!--     <TextView
+        android:id="@+id/linedetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/line_detail"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="0dp"
+        android:textColor="@color/black"
+        android:textSize="16dp" 
+        android:visibility="invisible">
+    </TextView>
+ -->
+   <!-- 让GridView单行滑动显示，HorizonScrollView用于横向滑动-->
+     
+     <HorizontalScrollView android:id="@+id/hsview"
+        android:layout_width="fill_parent" android:layout_height="wrap_content"     
+         android:layout_marginLeft="12dp"  android:layout_marginRight="5dp"
+        android:visibility="visible"  android:background="@color/white" android:scrollbars="none">
+            <LinearLayout
+                android:layout_width="fill_parent"  android:layout_height="wrap_content" 
+                android:orientation="horizontal"  android:layout_marginRight="5dp"    
+                >
+
+     <GridView android:id="@+id/linelist"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+		android:gravity="center"
+        android:background="@color/white"
+        android:stretchMode="none"
+
+        ></GridView> 
+        
+                 </LinearLayout>
+    </HorizontalScrollView>
+
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="80dp" >
+
+         <Button
+             android:id="@+id/fwei_map_bus"
+             android:layout_width="100dp"
+             android:layout_height="wrap_content"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentRight="true"
+             android:gravity="center"
+             android:text="地图显示" />
+
+     </RelativeLayout>
+
+</LinearLayout>
