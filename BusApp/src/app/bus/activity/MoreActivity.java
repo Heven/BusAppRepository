@@ -11,3 +11,6 @@ public class MoreActivity extends Activity {
 	}
 
 }
+
+
+/*  ≤‚ ‘ «∑Ògit≥…π¶*/
