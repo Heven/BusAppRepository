@@ -56,7 +56,7 @@ public class DatabaseHelper {
             + Environment.getDataDirectory().getAbsolutePath() + "/app.bus.activity"
             + "/xian.db";
 		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READONLY);
-		Cursor cur = mydb.rawQuery("select * from cnbus where kind = ? and zhan like ?", new String[]{"1",busStationName});
+		Cursor cur = mydb.rawQuery("select * from cnbus where kind = ? and zhan like ?", new String[]{"1","%"+busStationName+"%"});
 		if(cur != null)
         {
             if(cur.moveToFirst())
@@ -66,6 +66,7 @@ public class DatabaseHelper {
                 stationTemp.setLatitude(cur.getString(7));
                 stationTemp.setStationName(cur.getString(2));
                 stationTemp.addBusLine(searchBusLineByName(cur.getInt(0)));
+                stationTemp.addBusLine("¡¢ ");
                 stationList.add(stationTemp);
                 cur.moveToNext();
                do{
@@ -75,6 +76,7 @@ public class DatabaseHelper {
             		   {
             			   flag = false;
                            stationList.get(i).addBusLine(searchBusLineByName(cur.getInt(0)));
+                           stationList.get(i).addBusLine("¡¢ ");
             		   }		   
             	   }
             	   if(flag)
@@ -84,6 +86,7 @@ public class DatabaseHelper {
                        temp.setLatitude(cur.getString(7));
                        temp.setStationName(cur.getString(2));
                        temp.addBusLine(searchBusLineByName(cur.getInt(0)));
+                       temp.addBusLine("¡¢ ");
                        stationList.add(temp);
             	   }
 /*            	                                       

@@ -10,11 +10,4 @@ public class MoreActivity extends Activity {
 		setContentView(R.layout.more);
 	}
 
-	
-	
 }
-
-
-/*  ≤‚ ‘ «∑Ògit≥…π¶*/
-
-/* test which one do work. egit or wgit?*/
