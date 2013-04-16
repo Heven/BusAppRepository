@@ -10,6 +10,8 @@ public class MoreActivity extends Activity {
 		setContentView(R.layout.more);
 	}
 
+	
+	
 }
 
 

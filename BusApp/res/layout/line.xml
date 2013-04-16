@@ -91,19 +91,5 @@
                  </LinearLayout>
     </HorizontalScrollView>
 
-     <RelativeLayout
-         android:layout_width="match_parent"
-         android:layout_height="80dp" >
-
-         <Button
-             android:id="@+id/fwei_map_bus"
-             android:layout_width="100dp"
-             android:layout_height="wrap_content"
-             android:layout_alignParentBottom="true"
-             android:layout_alignParentRight="true"
-             android:gravity="center"
-             android:text="地图显示" />
-
-     </RelativeLayout>
 
 </LinearLayout>
