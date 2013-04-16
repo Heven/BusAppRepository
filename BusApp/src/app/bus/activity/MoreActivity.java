@@ -9,5 +9,8 @@ public class MoreActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.more);
 	}
+	/*
+	 * Ëæ±ãĞ´µã×¢ÊÍÀ´²âÊÔ£¡
+	 */
 
 }

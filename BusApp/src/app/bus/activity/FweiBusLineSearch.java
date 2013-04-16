@@ -53,7 +53,9 @@ public class FweiBusLineSearch extends MapActivity implements
 	private String fweiSearchName;
 	
 	private EditText pageSizeText;//搜索结果中显示的条目个数
-	
+	/*
+	 * 随便写点注释吧！！！
+	 */
 	private Button searchbystationBtn;
 	private ProgressDialog progDialog = null;//对话框
 	
