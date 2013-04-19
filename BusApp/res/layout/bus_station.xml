@@ -44,6 +44,9 @@
         android:id="@+id/expandableListView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" 
+        android:groupIndicator="@drawable/group_icon_selector"
+        
+        android:textColor="@color/black"
         >
     </ExpandableListView>
                  </LinearLayout>

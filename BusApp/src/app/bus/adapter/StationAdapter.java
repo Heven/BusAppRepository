@@ -24,7 +24,7 @@ import app.bus.database.Station;
 
 public class StationAdapter  extends BaseExpandableListAdapter implements
 OnItemClickListener{
-	public static final int ItemHeight = 48;// 每项的高度
+	public static final int ItemHeight = 30;// 每项的高度
 	public static final int PaddingLeft = 40;// 每项的高度
 	private int myPaddingLeft = 0;
 	private MyGridView toolbarGrid;

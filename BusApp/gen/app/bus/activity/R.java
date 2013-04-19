@@ -28,8 +28,8 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
         public static final int popup_bg=0x7f020003;
         public static final int red=0x7f02000f;
-        public static final int select_button=0x7f020004;
-        public static final int select_button_down=0x7f020005;
+        public static final int sbutton=0x7f020004;
+        public static final int sbutton_down=0x7f020005;
         public static final int selector_tab_background=0x7f020006;
         public static final int stationimage_1=0x7f020007;
         public static final int stationimage_2=0x7f020008;

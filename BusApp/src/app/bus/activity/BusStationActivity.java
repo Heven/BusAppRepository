@@ -43,8 +43,6 @@ public class BusStationActivity extends Activity {
 					20);
 			expandableListView = (ExpandableListView)BusStationActivity. this
 			.findViewById(R.id.expandableListView);
-			expandableListView.setGroupIndicator(BusStationActivity.this.getResources().getDrawable(R.drawable.group_icon_selector));
-			
 			List<StationAdapter.TreeNode> treeNode = treeViewAdapter.GetTreeNode();
 			for (int j = 0; j < i; j++)
 			{
