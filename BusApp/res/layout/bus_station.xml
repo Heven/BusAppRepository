@@ -40,14 +40,11 @@
             android:layout_marginRight="5dp"    
           >
 
-     <ListView android:id="@+id/stationlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-		android:gravity="left"
-        android:background="@color/white"
-        android:stretchMode="none"
-
-        ></ListView> 
-        
+      <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        >
+    </ExpandableListView>
                  </LinearLayout>
  </LinearLayout>

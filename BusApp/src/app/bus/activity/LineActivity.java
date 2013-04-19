@@ -29,7 +29,9 @@ public class LineActivity extends Activity{
     private TextView busLineResult ;
     private Button busLineSearch,fweiMapBus ;
     private StationListAdapter stationListAdapter;
-
+/*
+ * wo shi da wang
+ */
     private GridView stationGridView;
 
     /** Called when the activity is first created. */
