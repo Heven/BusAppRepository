@@ -1,5 +1,6 @@
 package app.bus.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.amap.mapapi.core.GeoPoint;
@@ -35,8 +36,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import app.bus.adapter.StationAdapter;
+import app.bus.database.DatabaseHelper;
+import app.bus.database.Station;
 
 public class MoreActivity extends MapActivity {
 	
@@ -48,8 +53,11 @@ public class MoreActivity extends MapActivity {
     private EditText Longitude;
     private EditText Latitude;
     private Button getLocation;
+    private Button search;
     private MapView mapView;
     private TextView myLocation;
+    private Double la;
+    private Double lon;
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
@@ -59,6 +67,7 @@ public class MoreActivity extends MapActivity {
 	    Latitude = (EditText)this.findViewById(R.id.Latitude);
 	    Longitude = (EditText)this.findViewById(R.id.Longitude);
 	    getLocation = (Button)this.findViewById(R.id.getlocation);
+	    search = (Button)this.findViewById(R.id.stationsearch);
 	    myLocation = (TextView)this.findViewById(R.id.mylocation);
 	    getLocation.setOnClickListener(new OnClickListener() {
 	    	
@@ -105,8 +114,8 @@ public class MoreActivity extends MapActivity {
         Log.e("location", "66666666666");
           */
        
-       Double la = Double.parseDouble(Latitude.getText().toString())*1E6;
-       Double lon = Double.parseDouble(Longitude.getText().toString())*1E6;
+       la = Double.parseDouble(Latitude.getText().toString())*1E6;
+       lon = Double.parseDouble(Longitude.getText().toString())*1E6;
 		msg = "经度：" + la + "\n";
 		msg += "纬度：" + lon + "\n";
 		//根据经纬度获得改点地址信息
@@ -182,6 +191,20 @@ public class MoreActivity extends MapActivity {
  				
  			}}
  			);
+	    
+	    search.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				DatabaseHelper helper = new DatabaseHelper();
+				ArrayList<Station> temp = helper.searchNearbyBusStation(la, lon);
+				String result="";
+				int i = temp.size();
+				
+			}
+
+		});
     }
 		   
 	class MyOverlay extends Overlay{

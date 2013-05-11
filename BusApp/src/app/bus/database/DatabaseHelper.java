@@ -48,6 +48,7 @@ public class DatabaseHelper {
 		}
 		return busLineName;
 	}
+	
 	public ArrayList<Station> searchBusStation(String busStationName){
 		ArrayList<Station> stationList = new ArrayList<Station>();
 		ArrayList<BusStation> busStationList = new ArrayList();
@@ -100,6 +101,49 @@ public class DatabaseHelper {
 		return stationList;
 	}
 	
+	public ArrayList<Station> searchNearbyBusStation(Double la,Double lon){
+		ArrayList<Station> stationList = new ArrayList<Station>();
+		ArrayList<BusStation> busStationList = new ArrayList();
+		SQLiteDatabase mydb = null;
+		String PATH = "/data"
+            + Environment.getDataDirectory().getAbsolutePath() + "/app.bus.activity"
+            + "/xian.db";
+		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READONLY);
+		Cursor cur = mydb.rawQuery("select * from cnbus c where c.kind = ? and  (Math.round(2*Math.asin(Math.sqrt(Math.pow(Math.sin(((c.xzhanbd-"+la+")*Math.PI/180.0)/2),2)+Math.cos(c.xzhanbd*Math.PI/180.0)*Math.cos("+la+"*Math.PI/180.0)*Math.pow(Math.sin((c.yzhanbd-"+lon+")*Math.PI/180.0/2),2)))*6378.137*10000)/10000) <=500",new String[]{"1"});
+		if(cur != null)
+        {
+            if(cur.moveToFirst())
+            {
+            	Station stationTemp = new Station();          	  
+                stationTemp.setLongitude(cur.getString(6));
+                stationTemp.setLatitude(cur.getString(7));
+                stationTemp.setStationName(cur.getString(2));
+                stationTemp.addBusLine(searchBusLineByName(cur.getInt(0)));
+                stationList.add(stationTemp);
+                cur.moveToNext();
+               do{
+            	   boolean flag = true;
+            	   for(int i =0;i<stationList.size();i++){
+            		   if(cur.getString(6).equalsIgnoreCase(stationList.get(i).getLongitude()))
+            		   {
+            			   flag = false;
+                           stationList.get(i).addBusLine(searchBusLineByName(cur.getInt(0)));
+            		   }		   
+            	   }
+            	   if(flag)
+            	   {
+            		   Station temp = new Station();          	  
+                       temp.setLongitude(cur.getString(6));
+                       temp.setLatitude(cur.getString(7));
+                       temp.setStationName(cur.getString(2));
+                       temp.addBusLine(searchBusLineByName(cur.getInt(0)));
+                       stationList.add(temp);
+            	   }
+                  }while(cur.moveToNext());
+            }
+        }
+		return stationList;
+	}
 	    
 	public ArrayList<BusStation> searchBusLineStation(String busLineID){
 		ArrayList<BusStation> busStation = new ArrayList();
