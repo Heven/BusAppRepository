@@ -58,6 +58,7 @@ public class MoreActivity extends MapActivity {
     private TextView myLocation;
     private Double la;
     private Double lon;
+    private ArrayList<Station> NearbyStations;
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
@@ -123,20 +124,17 @@ public class MoreActivity extends MapActivity {
 		myLocation.setText(msg);
         //获得卫星定位点
         geoPoint=new GeoPoint(la.intValue(),lon.intValue());
-        Log.e("location", "7777777777");
         //获得地图控制器
         mapController=mapView.getController();
         //设置地图显示初始化精度
         mapController.setZoom(19);
         mapController.animateTo(geoPoint);
         //实例化自定义绘图层
-        Log.e("location", "8888888888888");
-        MyOverlay myOverlay=new MyOverlay();
+        MyOverlay myOverlay=new MyOverlay(geoPoint);
         //为mapview添加绘图层
         mapView.getOverlays().add(myOverlay);
         //定义一个final，TextView，以备子类引用
      //  final TextView textView=(TextView) findViewById(R.id.textview);
-        Log.e("location", "999999999999");
         LocationListener locationListener=new LocationListener() {
 			
         	@Override
@@ -198,18 +196,72 @@ public class MoreActivity extends MapActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				DatabaseHelper helper = new DatabaseHelper();
-				ArrayList<Station> temp = helper.searchNearbyBusStation(la, lon);
-				String result="";
-				int i = temp.size();
-				
+				ArrayList<Station> temp = helper.searchNearbyBusStation(la,lon);
+				int count =nearbyStation(la,lon,temp);;
+				Log.e("first", ""+temp.size());
+				if (count==0) {
+					new AlertDialog.Builder(MoreActivity.this).setMessage("附近没有站点")
+					.setPositiveButton("确定",new DialogInterface.OnClickListener(){
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							//count=0;
+						}
+						
+					}).show();
+				}
+				 
 			}
-
+                
 		});
+				
+				
     }
 		   
+	int nearbyStation(Double la,Double lon,ArrayList<Station> temp){
+		
+		    int count = 0;
+		    Log.e("juli",""+temp.size());		    
+		    		for(int i=0;i<temp.size();i++){
+		    		    double a1=la*Math.PI/180.0;
+		    	        double a2=Double.parseDouble(temp.get(i).getLatitude())*Math.PI/180.0;
+		    	        double a=a1-a2;
+		    	        Log.e("juli","bbbbbbbbbbb");
+		    	        double b=(lon-Double.parseDouble(temp.get(i).getLongitude()))*Math.PI/180.0;
+		    	        double s=2*Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2)+Math.cos(a1)*Math.cos(a2)*Math.pow(Math.sin(b/2),2)));
+		    	        s=s*6378.137;//地球半径
+		    	        Log.e("juli",""+s);
+		    	        s = Math.round(s*10000)/10000;   
+		    	        Log.e("juli",""+s);
+		    	        if(s<10000){
+		    	        	/*  Double sla = Double.parseDouble(temp.get(i).getLatitude())*1E6;
+						       Double slon = Double.parseDouble(temp.get(i).getLongitude())*1E6;
+							   GeoPoint  sgeoPoint=new GeoPoint(sla.intValue(),slon.intValue());;
+						        //获得地图控制器
+						        mapController=mapView.getController();
+						        //设置地图显示初始化精度
+						        mapController.setZoom(19);
+						        mapController.animateTo(sgeoPoint);
+						        //实例化自定义绘图层
+						        List<Overlay> overlays = mapView.getOverlays();
+						        MyOverlay myOverlay=new MyOverlay(sgeoPoint);
+						        //为mapview添加绘图层
+						        overlays.add(myOverlay);	
+						        mapView.postInvalidate();*/
+		    	        count++;
+		    	        }	    
+		    }
+		    		Log.e("result", ""+count);
+           return count;		
+	}
 	class MyOverlay extends Overlay{
     	//保证触控事件不重复操作
     	private int count=0;
+    	private GeoPoint geoPoint;
+    	
+    	public MyOverlay(GeoPoint gp) {
+			// TODO Auto-generated constructor stub
+    		geoPoint = gp;
+		}
 		@Override
 		public boolean draw(Canvas canvas, MapView mapView, boolean shadow,
 				long when) {
