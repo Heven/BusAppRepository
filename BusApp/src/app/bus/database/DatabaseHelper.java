@@ -3,6 +3,7 @@ package app.bus.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
@@ -68,6 +69,7 @@ public class DatabaseHelper {
                 stationTemp.setLatitude(cur.getString(7));
                 stationTemp.setStationName(cur.getString(2));
                 stationTemp.addBusLine(searchBusLineByName(cur.getInt(0)));
+                stationTemp.addBusLine("、 ");
                 stationList.add(stationTemp);
                 cur.moveToNext();
                do{
@@ -77,6 +79,7 @@ public class DatabaseHelper {
             		   {
             			   flag = false;
                            stationList.get(i).addBusLine(searchBusLineByName(cur.getInt(0)));
+            		   	   stationList.get(i).addBusLine("、 ");	
             		   }		   
             	   }
             	   if(flag)
@@ -86,6 +89,7 @@ public class DatabaseHelper {
                        temp.setLatitude(cur.getString(7));
                        temp.setStationName(cur.getString(2));
                        temp.addBusLine(searchBusLineByName(cur.getInt(0)));
+                       temp.addBusLine("、 ");
                        stationList.add(temp);
             	   }
 /*            	                                       
@@ -152,5 +156,72 @@ public class DatabaseHelper {
             }
         }
 		return busStation;
+	}
+	public Boolean addLineCollection(String name){
+		
+		SQLiteDatabase mydb = null;
+		String PATH = "/data"
+            + Environment.getDataDirectory().getAbsolutePath() + "/app.bus.activity"
+            + "/user.db";
+		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READWRITE);
+		//String sql = "create table linecollection(_id INTEGER PRIMARY KEY,linename varchar(100))";
+		//mydb.execSQL(sql);
+		if(!searchLineCollectionItem(name))
+		{
+			ContentValues values = new ContentValues();//通过ContentValues对象来传入参数
+			values.put("linename", name);
+			mydb.insert("linecollection", null, values);
+			Log.i("addCollection","success");
+		}
+		
+	    return true;
+	}
+	
+	public ArrayList<String> getLineCollection(){
+		ArrayList<String> lineCollectionList = new ArrayList<String>();
+		SQLiteDatabase mydb = null;
+		String PATH = "/data"
+            + Environment.getDataDirectory().getAbsolutePath() + "/app.bus.activity"
+            + "/user.db";
+		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READONLY);
+		Cursor cur = mydb.rawQuery("select * from linecollection",null);
+		
+		if(cur != null&&cur.moveToFirst())
+        {
+			do{
+				String temp = cur.getString(1);
+            	lineCollectionList.add(temp);
+            	}while(cur.moveToNext());	
+         }       
+            
+		return lineCollectionList;
+	}
+	
+	public Boolean deleteLineCollectionItem(String name){
+		Boolean temp = true;
+		SQLiteDatabase mydb = null;
+		String PATH = "/data"
+            + Environment.getDataDirectory().getAbsolutePath() + "/app.bus.activity"
+            + "/user.db";
+		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READWRITE);
+		mydb.delete("linecollection", "linename=?", new String[]{name});
+		return temp;
+	}
+	
+	public Boolean searchLineCollectionItem(String name){
+		Boolean temp = false;
+		SQLiteDatabase mydb = null;
+		String PATH = "/data"
+            + Environment.getDataDirectory().getAbsolutePath() + "/app.bus.activity"
+            + "/user.db";
+		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READWRITE);
+		Cursor cur = mydb.rawQuery("select * from linecollection where linename = '"+name+"'",null);		
+		if(cur != null&&cur.moveToFirst())
+        {
+			temp=true;
+         }       
+		return temp;
+		
+		
 	}
 }

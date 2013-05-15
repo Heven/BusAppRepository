@@ -2,7 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical" >
+<!--     <TextView
+        android:id="@+id/collectiontitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="收藏列表如下">        
+    </TextView> -->
+    
+    <ListView 
+        android:id="@+id/collectionlistview"
+        android:layout_marginTop="15dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/gray"
+        android:dividerHeight="1dp"
+        
+        
+        
+    ></ListView>
     
     
 </LinearLayout>
