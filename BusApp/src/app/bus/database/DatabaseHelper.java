@@ -6,6 +6,7 @@ import java.util.List;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.util.Log;
 
 
 
@@ -48,6 +49,7 @@ public class DatabaseHelper {
 		}
 		return busLineName;
 	}
+	
 	public ArrayList<Station> searchBusStation(String busStationName){
 		ArrayList<Station> stationList = new ArrayList<Station>();
 		ArrayList<BusStation> busStationList = new ArrayList();
@@ -66,7 +68,6 @@ public class DatabaseHelper {
                 stationTemp.setLatitude(cur.getString(7));
                 stationTemp.setStationName(cur.getString(2));
                 stationTemp.addBusLine(searchBusLineByName(cur.getInt(0)));
-                stationTemp.addBusLine("¡¢ ");
                 stationList.add(stationTemp);
                 cur.moveToNext();
                do{
@@ -76,7 +77,6 @@ public class DatabaseHelper {
             		   {
             			   flag = false;
                            stationList.get(i).addBusLine(searchBusLineByName(cur.getInt(0)));
-                           stationList.get(i).addBusLine("¡¢ ");
             		   }		   
             	   }
             	   if(flag)
@@ -86,7 +86,6 @@ public class DatabaseHelper {
                        temp.setLatitude(cur.getString(7));
                        temp.setStationName(cur.getString(2));
                        temp.addBusLine(searchBusLineByName(cur.getInt(0)));
-                       temp.addBusLine("¡¢ ");
                        stationList.add(temp);
             	   }
 /*            	                                       
@@ -103,6 +102,32 @@ public class DatabaseHelper {
 		return stationList;
 	}
 	
+	public ArrayList<Station> searchNearbyBusStation(Double la,Double lon){
+		ArrayList<Station> stationList = new ArrayList<Station>();
+		ArrayList<BusStation> busStationList = new ArrayList();
+		SQLiteDatabase mydb = null;
+		String PATH = "/data"
+            + Environment.getDataDirectory().getAbsolutePath() + "/app.bus.activity"
+            + "/xian.db";
+		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READONLY);
+		Cursor cur = mydb.rawQuery("select * from cnbus  where kind = ? and xzhanbd<("+la+"+0.002) and yzhanbd < ("+lon+"+0.002) ",new String[]{"1"});
+		
+		if(cur != null)
+        {
+            if(cur.moveToFirst())
+            {
+            	Station stationTemp = new Station();          	  
+                stationTemp.setLongitude(cur.getString(6));
+                stationTemp.setLatitude(cur.getString(7));
+                stationTemp.setStationName(cur.getString(2));
+                stationTemp.addBusLine(searchBusLineByName(cur.getInt(0)));
+                stationList.add(stationTemp);
+                cur.moveToNext();
+           }
+        }
+		mydb.close();
+		return stationList;
+	}
 	    
 	public ArrayList<BusStation> searchBusLineStation(String busLineID){
 		ArrayList<BusStation> busStation = new ArrayList();
