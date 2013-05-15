@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+  
+    <TextView
+        android:id="@+id/lineresultinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold" 
+        
+        >
+    </TextView>
+     <ImageButton 
+             android:id="@+id/linecollectioninfo"
+             android:layout_width="30dp"
+             android:layout_height="30dp"
+             android:background="@drawable/nocollection"
+             android:contentDescription="@string/contentDescription"
+             android:layout_gravity="center"
+             android:layout_marginLeft="170dp"
+             
+             
+             />
+     <ImageButton android:id="@+id/homepageinfo"
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:contentDescription="@string/contentDescription"
+         android:background="@drawable/homepage"
+         android:layout_marginLeft="20dp"
+         android:layout_gravity="center"/>
+    
+    
+    </LinearLayout>
+    
+
+    <TextView
+        android:id="@+id/linetimeinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
+        android:textSize="16sp" >
+    </TextView>
+
+<!--     <TextView
+        android:id="@+id/linedetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/line_detail"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="0dp"
+        android:textColor="@color/black"
+        android:textSize="16dp" 
+        android:visibility="invisible">
+    </TextView>
+ -->
+   <!-- 让GridView单行滑动显示，HorizonScrollView用于横向滑动-->
+     
+     <HorizontalScrollView android:id="@+id/hsviewinfo"
+        android:layout_width="fill_parent" android:layout_height="wrap_content"     
+         android:layout_marginLeft="12dp"  android:layout_marginRight="5dp"
+        android:visibility="visible"  android:background="@color/white" android:scrollbars="none">
+            <LinearLayout
+                android:layout_width="wrap_content"  android:layout_height="wrap_content" 
+                android:orientation="horizontal"  android:layout_marginRight="5dp"    
+                >
+
+     <GridView android:id="@+id/linelistinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+		android:gravity="center"
+        android:background="@color/white"
+        android:stretchMode="none"
+
+        ></GridView> 
+        
+                 </LinearLayout>
+    </HorizontalScrollView>
+
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="80dp" >
+            
+        
+         <Button
+             android:id="@+id/fwei_map_businfo"
+             android:layout_width="100dp"
+             android:layout_height="wrap_content"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentRight="true"
+             android:gravity="center"
+             android:text="地图显示" />
+
+     </RelativeLayout>
+
+</LinearLayout>
