@@ -210,7 +210,7 @@ OnItemClickListener{
 		
 		HashMap<String, String> map = (HashMap<String, String>) parent.getItemAtPosition(position);  
 		String busLine = map.get("itemText");  
- 
+        //Ìø×ª
 		Intent intent = new Intent(parentContext,LineInfoActivity.class);
 		intent.putExtra("busLineName", busLine);
 		parentContext.startActivity(intent);
