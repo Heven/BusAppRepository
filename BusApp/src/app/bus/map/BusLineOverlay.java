@@ -32,7 +32,7 @@ import com.amap.mapapi.map.MapView;
 import com.amap.mapapi.map.Overlay;
 import com.amap.mapapi.map.Projection;
 
-public class FweiBusLineOverlay extends Overlay {
+public class BusLineOverlay extends Overlay {
 	protected static MapActivity mContext;// 地图activity
 	protected BusLineItem busLine;// 公交线路列表
 	private MapView mapView = null;
@@ -47,7 +47,7 @@ public class FweiBusLineOverlay extends Overlay {
 	private List<BusLineMsgHandler> mMsgsHandlers = new ArrayList<BusLineMsgHandler>();// 公交线路消息列表
 	private boolean boHasInit = false;
 
-	public FweiBusLineOverlay(MapActivity cnt, BusLineItem busLine) {// 构造函数
+	public BusLineOverlay(MapActivity cnt, BusLineItem busLine) {// 构造函数
 		mContext = cnt;
 		this.busLine = busLine;
 		initPaint();// 初始化
@@ -202,11 +202,11 @@ public class FweiBusLineOverlay extends Overlay {
 	private int buildStack(MapView mapView, ArrayList<Point> stack) {
 		int index = 0;
 		ArrayList<GeoPoint> geoPts = busLine.getmXys();
-		Point p0 = FweiBusLineOverlay.geoToPoint(mapView, geoPts.get(index));
+		Point p0 = BusLineOverlay.geoToPoint(mapView, geoPts.get(index));
 		Point p1 = null;
 		while (index < geoPts.size() - 1) {
 			index++;
-			p1 = FweiBusLineOverlay.geoToPoint(mapView, geoPts.get(index));
+			p1 = BusLineOverlay.geoToPoint(mapView, geoPts.get(index));
 			if (stack.size() == 0) {
 				stack.add(p0);
 				stack.add(p1);
@@ -334,14 +334,14 @@ public class FweiBusLineOverlay extends Overlay {
 	 */
 	public interface BusLineMsgHandler {
 		public boolean onStationClickEvent(MapView mapView,
-				FweiBusLineOverlay overlay, int index);
+				BusLineOverlay overlay, int index);
 	}
 
 	/*
 	 * 消息handler
 	 */
 	class MsgHandler implements BusLineMsgHandler {
-		public boolean onStationClickEvent(MapView mapView,FweiBusLineOverlay overlay, int index) 
+		public boolean onStationClickEvent(MapView mapView,BusLineOverlay overlay, int index) 
 		{// 点击到公交站点的事件
 			boolean handled = false;
 			for (BusLineMsgHandler handler : mMsgsHandlers) 
@@ -490,17 +490,17 @@ public class FweiBusLineOverlay extends Overlay {
 }
 
 class StationOverlay {// 站点图层
-	protected FweiBusLineOverlay mOverlay;
+	protected BusLineOverlay mOverlay;
 	protected int mIndex;// 索引
 	protected GeoPoint mPos;
 	private Drawable mFlag;// 放置图片的地方
-	private FweiBusLineOverlay.BusLineMsgHandler mHandler;
+	private BusLineOverlay.BusLineMsgHandler mHandler;
 	private boolean mHitDowm;// 是否点击标志位
 
 	
 	//构造函数
-	public StationOverlay(FweiBusLineOverlay overlay, int index, GeoPoint pos,
-			Drawable dr, FweiBusLineOverlay.BusLineMsgHandler handler) {
+	public StationOverlay(BusLineOverlay overlay, int index, GeoPoint pos,
+			Drawable dr, BusLineOverlay.BusLineMsgHandler handler) {
 		mOverlay = overlay;
 		mIndex = index;
 		mPos = pos;

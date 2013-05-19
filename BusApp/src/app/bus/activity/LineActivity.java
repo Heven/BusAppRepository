@@ -57,7 +57,7 @@ public class LineActivity extends Activity{
 					
 					//´«Öµ
 					gaodeIntent.putExtra("busname", busLine);
-					gaodeIntent.setClass(LineActivity.this, FweiBusLineSearch.class);
+					gaodeIntent.setClass(LineActivity.this, BusLineSearch.class);
 					startActivity(gaodeIntent);	
 				}
 			});

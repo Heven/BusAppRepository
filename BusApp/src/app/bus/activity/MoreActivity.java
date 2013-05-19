@@ -50,8 +50,8 @@ import android.widget.Toast;
 import app.bus.adapter.StationAdapter;
 import app.bus.database.DatabaseHelper;
 import app.bus.database.Station;
-import app.bus.map.FweiBusLineOverlay;
-import app.bus.map.FweiConstants;
+import app.bus.map.BusLineOverlay;
+import app.bus.map.Constants;
 
 public class MoreActivity extends MapActivity {
 	

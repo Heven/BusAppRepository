@@ -39,9 +39,9 @@ import com.amap.mapapi.map.MapActivity;
 import com.amap.mapapi.map.MapController;
 import com.amap.mapapi.map.MapView;
 
-public class FweiBusLineSearch extends MapActivity implements
+public class BusLineSearch extends MapActivity implements
 		OnItemSelectedListener, OnClickListener,
-		FweiBusLineOverlay.BusLineMsgHandler {
+		BusLineOverlay.BusLineMsgHandler {
 	private MapView mMapView = null;//MapView一个显示地图（数据来自MapABC地图服务）的视图
 	private Button searchbynameBtn;//按线路名字搜索按钮
 //	private Spinner selectCity;//下拉列表
@@ -63,7 +63,7 @@ public class FweiBusLineSearch extends MapActivity implements
 	//公交线路搜索结果是分页显示的，从第1页开始，每页最多20个BusLineItem。BusPagedResult封装了此分页结果，
 	//并且会缓存已经检索到的页的搜索结果。
 	//此类不可直接构造，只能通过调用类BusSearch的searchBusLine()方法得到。 
-	private FweiBusLineOverlay overlay = null;
+	private BusLineOverlay overlay = null;
 	private int curPage = 1;
 
 	private MapController mMapController;// 一个工具类，用于控制地图的缩放和平移。
@@ -119,7 +119,7 @@ public class FweiBusLineSearch extends MapActivity implements
 		
 		
 		
-		progDialog = ProgressDialog.show(FweiBusLineSearch.this, null, "正在搜索...",
+		progDialog = ProgressDialog.show(BusLineSearch.this, null, "正在搜索...",
 				true, false);
 		Thread t = new Thread(new Runnable() {
 
@@ -131,7 +131,7 @@ public class FweiBusLineSearch extends MapActivity implements
 			
 				try {
 					curPage = 1;
-					BusSearch busSearch = new BusSearch(FweiBusLineSearch.this,
+					BusSearch busSearch = new BusSearch(BusLineSearch.this,
 							new BusQuery(search, type, cityCode)); // 设置搜索字符串
 					
 					//BusSearch类为公交线路搜索的“入口”类，定义此类，开始搜索。
@@ -148,10 +148,10 @@ public class FweiBusLineSearch extends MapActivity implements
 					Log.d("AMAP POI search", "poi search page count = "
 							+ result.getPageCount());
 					
-					buslineHandler.sendEmptyMessage(FweiConstants.BUSLINE_RESULT);
+					buslineHandler.sendEmptyMessage(Constants.BUSLINE_RESULT);
 				} catch (AMapException e) {
 					Message msg = new Message();
-					msg.what = FweiConstants.BUSLINE_ERROR_RESULT;
+					msg.what = Constants.BUSLINE_ERROR_RESULT;
 					msg.obj = e.getErrorMessage();
 					buslineHandler.sendMessage(msg);
 				}
@@ -176,8 +176,8 @@ public class FweiBusLineSearch extends MapActivity implements
 		if (overlay != null) {//已经有图层了，则需要把从前的图层消除掉
 			overlay.removeFromMap(mMapView);
 		}
-		overlay = new FweiBusLineOverlay(this, busLine);
-		overlay.registerBusLineMessage(FweiBusLineSearch.this);
+		overlay = new BusLineOverlay(this, busLine);
+		overlay.registerBusLineMessage(BusLineSearch.this);
 		
 		overlay.addToMap(mMapView);
 		
@@ -193,30 +193,30 @@ public class FweiBusLineSearch extends MapActivity implements
  * 显示结果列表
  */
 	private void showResultList(List<BusLineItem> list) {
-		BusSearchDialog dialog = new BusSearchDialog(FweiBusLineSearch.this, list);
+		BusSearchDialog dialog = new BusSearchDialog(BusLineSearch.this, list);
 
 		dialog.setTitle("搜索结果:");
 		dialog.setOnListClickListener(new OnListItemClick() {
 			@Override
 			public void onListItemClick(BusSearchDialog dialog,
 					final BusLineItem busLineItem) {
-				progDialog = ProgressDialog.show(FweiBusLineSearch.this, null,
+				progDialog = ProgressDialog.show(BusLineSearch.this, null,
 						"正在搜索...", true, false);
 				Thread t = new Thread(new Runnable() {
 
 					@Override
 					public void run() {
 						String lineId = busLineItem.getmLineId();
-						BusSearch busSearch = new BusSearch(FweiBusLineSearch.this,
+						BusSearch busSearch = new BusSearch(BusLineSearch.this,
 								new BusQuery(lineId, BusQuery.SearchType.BY_ID,
 										cityCode)); // 设置搜索字符串
 						try {
 							result = busSearch.searchBusLine();
 							buslineHandler
-									.sendEmptyMessage(FweiConstants.BUSLINE_DETAIL_RESULT);
+									.sendEmptyMessage(Constants.BUSLINE_DETAIL_RESULT);
 						} catch (AMapException e) {
 							Message msg = new Message();
-							msg.what = FweiConstants.BUSLINE_ERROR_RESULT;
+							msg.what = Constants.BUSLINE_ERROR_RESULT;
 							msg.obj = e.getErrorMessage();
 							buslineHandler.sendMessage(msg);
 						}
@@ -237,7 +237,7 @@ public class FweiBusLineSearch extends MapActivity implements
  */
 	public void onClick(View v) {
 		final Button btn = (Button) v;
-		progDialog = ProgressDialog.show(FweiBusLineSearch.this, null, "正在搜索...",
+		progDialog = ProgressDialog.show(BusLineSearch.this, null, "正在搜索...",
 				true, false);
 		Thread t = new Thread(new Runnable() {
 
@@ -260,7 +260,7 @@ public class FweiBusLineSearch extends MapActivity implements
 				}
 				try {
 					curPage = 1;
-					BusSearch busSearch = new BusSearch(FweiBusLineSearch.this,
+					BusSearch busSearch = new BusSearch(BusLineSearch.this,
 							new BusQuery(search, type, cityCode)); // 设置搜索字符串
 					
 					//BusSearch类为公交线路搜索的“入口”类，定义此类，开始搜索。
@@ -277,10 +277,10 @@ public class FweiBusLineSearch extends MapActivity implements
 					Log.d("AMAP POI search", "poi search page count = "
 							+ result.getPageCount());
 					
-					buslineHandler.sendEmptyMessage(FweiConstants.BUSLINE_RESULT);
+					buslineHandler.sendEmptyMessage(Constants.BUSLINE_RESULT);
 				} catch (AMapException e) {
 					Message msg = new Message();
-					msg.what = FweiConstants.BUSLINE_ERROR_RESULT;
+					msg.what = Constants.BUSLINE_ERROR_RESULT;
 					msg.obj = e.getErrorMessage();
 					buslineHandler.sendMessage(msg);
 				}
@@ -292,7 +292,7 @@ public class FweiBusLineSearch extends MapActivity implements
 
 	private Handler buslineHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			if (msg.what == FweiConstants.BUSLINE_RESULT) {
+			if (msg.what == Constants.BUSLINE_RESULT) {
 				progDialog.dismiss();
 				if (overlay != null) {
 					overlay.removeFromMap(mMapView);
@@ -314,7 +314,7 @@ public class FweiBusLineSearch extends MapActivity implements
 				} catch (AMapException e) {
 					e.printStackTrace();
 				}
-			} else if (msg.what == FweiConstants.BUSLINE_DETAIL_RESULT) {
+			} else if (msg.what == Constants.BUSLINE_DETAIL_RESULT) {
 				progDialog.dismiss();
 				List<BusLineItem> list;
 				try {
@@ -327,7 +327,7 @@ public class FweiBusLineSearch extends MapActivity implements
 				} catch (AMapException e) {
 					e.printStackTrace();
 				}
-			} else if (msg.what == FweiConstants.BUSLINE_ERROR_RESULT) {
+			} else if (msg.what == Constants.BUSLINE_ERROR_RESULT) {
 				progDialog.dismiss();
 				Toast.makeText(getApplicationContext(), (String) msg.obj,
 						Toast.LENGTH_SHORT).show();
@@ -420,7 +420,7 @@ public class FweiBusLineSearch extends MapActivity implements
 					curPage++;
 				}
 
-				progDialog = ProgressDialog.show(FweiBusLineSearch.this, null,
+				progDialog = ProgressDialog.show(BusLineSearch.this, null,
 						"正在搜索...", true, false);
 				Thread t = new Thread(new Runnable() {
 
@@ -429,10 +429,10 @@ public class FweiBusLineSearch extends MapActivity implements
 						try {
 							result.getPage(curPage);
 							buslineHandler
-									.sendEmptyMessage(FweiConstants.BUSLINE_RESULT);
+									.sendEmptyMessage(Constants.BUSLINE_RESULT);
 						} catch (AMapException e) {
 							Message msg = new Message();
-							msg.what = FweiConstants.BUSLINE_ERROR_RESULT;
+							msg.what = Constants.BUSLINE_ERROR_RESULT;
 							msg.obj = e.getErrorMessage();
 							buslineHandler.sendMessage(msg);
 						}
@@ -508,7 +508,7 @@ public class FweiBusLineSearch extends MapActivity implements
 	}
 
 	@Override
-	public boolean onStationClickEvent(MapView mapView, FweiBusLineOverlay overlay,
+	public boolean onStationClickEvent(MapView mapView, BusLineOverlay overlay,
 			int index) {
 		return false;
 	}

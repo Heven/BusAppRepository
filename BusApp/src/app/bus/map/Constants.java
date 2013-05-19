@@ -1,6 +1,6 @@
 package app.bus.map;
 
-public class FweiConstants {//常量类，用来标识状态的
+public class Constants {//常量类，用来标识状态的
 	
 	public static final int POISEARCH=1000;
 	
