@@ -2,7 +2,74 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical" >
-    
-    
+    <LinearLayout
+        android:id="@+id/station_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="9dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+        <Button 
+            android:id="@+id/getlocation"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:layout_marginTop="5dp"
+            android:text="锁定"/>
+
+        <EditText
+            android:id="@+id/Latitude"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3.0"
+            android:ems="10"
+            android:hint="34.250575"
+            android:layout_marginTop="5dp"
+            android:singleLine="true">
+        </EditText>
+        <EditText
+            android:id="@+id/Longitude"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3.0"
+            android:ems="10"
+            android:hint="108.983709"
+            android:layout_marginTop="5dp"
+            android:singleLine="true">
+        </EditText>
+        <TextView
+            android:id="@+id/mylocation"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3.0"
+            android:ems="10"
+            android:hint="当前位置"
+            android:layout_marginTop="5dp"
+            android:singleLine="true">
+        </TextView>
+        <Button
+            android:id="@+id/stationsearch"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1.0"
+            android:text="查找" />
+    </LinearLayout> 
+   
+     <LinearLayout
+            android:layout_width="fill_parent"  
+            android:layout_height="wrap_content" 
+            android:orientation="horizontal"  
+            android:layout_marginRight="5dp"    
+          >
+
+      <com.amap.mapapi.map.MapView
+        android:id="@+id/busstationmapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />
+                 </LinearLayout>
  </LinearLayout>

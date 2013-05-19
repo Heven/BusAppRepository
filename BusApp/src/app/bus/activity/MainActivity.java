@@ -47,7 +47,7 @@ public class MainActivity extends TabActivity {
 	}
 
 	private Intent getTabItemIntent(int i) {
-		Intent intent = new Intent(this, mTabClassArray[i]);
+		Intent intent = new Intent(this, mTabClassArray[i]).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);;
 		return intent;
 	}
 

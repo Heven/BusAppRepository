@@ -9,6 +9,7 @@ import java.io.InputStream;
  
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
@@ -22,7 +23,9 @@ public class DBtool {
             + PACKAGE_NAME;  //在手机里存放数据库的位置
  
     private SQLiteDatabase database;
+    private SQLiteDatabase userDatabase;
     private Context context;
+    public static final String USER_DB = "user.db";
  
     public DBtool(Context context) {
         this.context = context;
@@ -30,6 +33,26 @@ public class DBtool {
  
     public void openDatabase() {
         this.database = this.openDatabase(DB_PATH + "/" + DB_NAME);
+        //建立用户数据库
+        if(!new File(DB_PATH + "/" + USER_DB).exists()){
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + "/" + USER_DB,
+                null);
+       //收藏夹表格建立; 最好不要硬写代码，用sql文件的格式比较好。
+        String sql = "create table linecollection(_id INTEGER PRIMARY KEY,linename varchar(100))";
+ 		//String sql = "drop table linecollection";
+         try{
+        	 db.execSQL(sql);
+        	 Log.i("collection","createTable");
+        	 }
+         catch(SQLException e)
+ 		 {
+        	 Log.i("collection","createTableFailed");
+        	 
+ 		 }
+         
+        }
+        this.userDatabase = SQLiteDatabase.openOrCreateDatabase(DB_PATH + "/" + USER_DB,null);
+         
     }
  
     private SQLiteDatabase openDatabase(String dbfile) {
@@ -62,6 +85,7 @@ public class DBtool {
     
     public void closeDatabase() {
         this.database.close();
+        this.userDatabase.close();
     }
 
 }

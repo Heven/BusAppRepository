@@ -27,7 +27,7 @@ public class LineActivity extends Activity{
     private EditText busLineName ;
     private TextView busLineTime ;
     private TextView busLineResult ;
-    private Button busLineSearch,fweiMapBus ;
+    private Button busLineSearch,fweiMapBus,busLineCollection;
     private StationListAdapter stationListAdapter;
 
     private GridView stationGridView;
@@ -41,7 +41,9 @@ public class LineActivity extends Activity{
 			busLineName = (EditText) findViewById(R.id.linename);
 		    busLineTime = (TextView) findViewById(R.id.linetime);
 		    busLineSearch = (Button) findViewById(R.id.linesearch);
-		    busLineResult = (TextView) findViewById(R.id.lineresult);	
+		    busLineResult = (TextView) findViewById(R.id.lineresult);
+		    busLineCollection =(Button) findViewById(R.id.linecollection);
+		    busLineCollection.setOnClickListener(collection);	
 		    busLineSearch.setOnClickListener(search);  
 		    //地图显示公交线路
 		    fweiMapBus=(Button) findViewById(R.id.fwei_map_bus);
@@ -60,6 +62,7 @@ public class LineActivity extends Activity{
 				}
 			});
 		    fweiMapBus.setVisibility(8);
+		     busLineCollection.setVisibility(8);
 		}
 	 private OnClickListener search = new OnClickListener() {
 			
@@ -99,7 +102,7 @@ public class LineActivity extends Activity{
 				stationGridView.setHorizontalSpacing(0);
 				
 				fweiMapBus.setVisibility(0);
-				
+				busLineCollection.setVisibility(0);
 					
 				
 			
@@ -112,6 +115,15 @@ public class LineActivity extends Activity{
 			}
 	 };
 	 
+	  private OnClickListener collection = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			DatabaseHelper dbHelper = new DatabaseHelper();
+			dbHelper.addLineCollection(busLineResult.getText().toString());		
+		}
+	};
 	 
 		 
 	 
