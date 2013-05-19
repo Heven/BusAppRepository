@@ -232,11 +232,7 @@ public class MoreActivity extends MapActivity {
 		    Log.e("juli",""+temp.size());					
 		    		for(int i=0;i<temp.size();i++){
 		    			String stationName = temp.get(i).getStationName();
-		    			ArrayList<Station> station = helper.searchBusStation(stationName);
-		    			String info = "";
-		    			for(int j= 0 ;j<station.size();j++){
-		    				info += station.get(j).getBusLine();
-		    			}
+		    			
 		    			 Log.e("latitude", ""+temp.get(i).getLatitude());
 						   Log.e("longetude", ""+temp.get(i).getLongitude());
 		    		    double a1=la*Math.PI/180.0;
@@ -256,8 +252,7 @@ public class MoreActivity extends MapActivity {
 						       // mOverlays.add(new MyOverlay(sgeoPoint));
 							   Log.e("latitude", ""+sla);
 							   Log.e("longetude", ""+slon);
-							   Log.e("info", info);
-                               OverlayItem oitem = new OverlayItem(sgeoPoint,stationName,info);
+                               OverlayItem oitem = new OverlayItem(sgeoPoint,stationName,stationName);
 							  // MyOverlay demo =new MyOverlay(MoreActivity.this,sgeoPoint,temp.get(i).getStationName());
                                itemOverlay.addOverlay(oitem);
 							   //mOverlays.add(demo);
@@ -333,18 +328,23 @@ class StationItemizedOverlay extends ItemizedOverlay<OverlayItem>
 		 canvas.drawText(oitem.getTitle(), point.x+5, point.y-35, paintText);
 		 
 	 }
-	 
  }
  @Override
  protected boolean onTap(int index)
  {
  OverlayItem item = mOverlays.get(index);
+ DatabaseHelper helper = new DatabaseHelper();
+ ArrayList<Station> station = helper.searchBusStation(item.getSnippet());
+	String info = "经过该站点的线路有：";
+	for(int j= 0 ;j<station.size();j++){
+		info += station.get(j).getBusLine();
+	}
  AlertDialog.Builder dialog = new AlertDialog.Builder(mContext).setPositiveButton("确定", new DialogInterface.OnClickListener(){
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 											}});
  dialog.setTitle(item.getTitle());
- dialog.setMessage(item.getSnippet());
+ dialog.setMessage(info);
  dialog.show();
  return true;
  }
