@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Vector;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -17,6 +19,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import app.bus.activity.LineInfoActivity;
 import app.bus.activity.MyGridView;
 import app.bus.activity.R;
 import app.bus.database.Station;
@@ -204,8 +207,13 @@ OnItemClickListener{
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id)
 	{
-		Toast.makeText(parentContext, "当前选中的是:" + position, Toast.LENGTH_SHORT)
-				.show();
+		
+		HashMap<String, String> map = (HashMap<String, String>) parent.getItemAtPosition(position);  
+		String busLine = map.get("itemText");  
+ 
+		Intent intent = new Intent(parentContext,LineInfoActivity.class);
+		intent.putExtra("busLineName", busLine);
+		parentContext.startActivity(intent);
 
 	}
 

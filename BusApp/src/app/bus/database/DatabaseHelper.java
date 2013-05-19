@@ -31,7 +31,8 @@ public class DatabaseHelper {
 				busLine.setStationList(searchBusLineStation(busLine.getBusLineID().toString()));
 			}
 		}
-		
+		cur.close();
+		mydb.close();
 		return busLine;
 	}
     
@@ -48,6 +49,8 @@ public class DatabaseHelper {
 				busLineName = cur.getString(1);
 			}
 		}
+		cur.close();
+		mydb.close();
 		return busLineName;
 	}
 	
@@ -89,14 +92,6 @@ public class DatabaseHelper {
                        temp.addBusLine(searchBusLineByName(cur.getInt(0)));
                        stationList.add(temp);
             	   }
-/*            	                                       
-                   BusStation busStationTemp = new BusStation();
-                   busStationTemp.setStationNum(Integer.parseInt(cur.getString(1))); 
-                   busStationTemp.setLongitude(cur.getString(6));
-                    busStationTemp.setLatitude(cur.getString(7));
-                    busStationTemp.setStationName(cur.getString(2));
-                    busStationTemp.setBusLine(searchBusLineByName(cur.getInt(0)));
-                    busStationList.add(busStationTemp);*/
                   }while(cur.moveToNext());
             }
         }
@@ -161,6 +156,8 @@ public class DatabaseHelper {
                   }while(cur.moveToNext());
             }
         }
+		 cur.close();
+	     mydb.close();
 		return busStation;
 	}
 	public Boolean addLineCollection(String name){
@@ -170,8 +167,6 @@ public class DatabaseHelper {
             + Environment.getDataDirectory().getAbsolutePath() + "/app.bus.activity"
             + "/user.db";
 		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READWRITE);
-		//String sql = "create table linecollection(_id INTEGER PRIMARY KEY,linename varchar(100))";
-		//mydb.execSQL(sql);
 		if(!searchLineCollectionItem(name))
 		{
 			ContentValues values = new ContentValues();//通过ContentValues对象来传入参数
@@ -179,7 +174,7 @@ public class DatabaseHelper {
 			mydb.insert("linecollection", null, values);
 			Log.i("addCollection","success");
 		}
-		
+	     mydb.close();
 	    return true;
 	}
 	
@@ -199,7 +194,8 @@ public class DatabaseHelper {
             	lineCollectionList.add(temp);
             	}while(cur.moveToNext());	
          }       
-            
+		cur.close();
+	    mydb.close();   
 		return lineCollectionList;
 	}
 	
@@ -211,7 +207,9 @@ public class DatabaseHelper {
             + "/user.db";
 		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READWRITE);
 		mydb.delete("linecollection", "linename=?", new String[]{name});
+	    mydb.close();
 		return temp;
+
 	}
 	
 	public Boolean searchLineCollectionItem(String name){
@@ -225,9 +223,11 @@ public class DatabaseHelper {
 		if(cur != null&&cur.moveToFirst())
         {
 			temp=true;
-         }       
+         }     
+		cur.close();
+	    mydb.close();
 		return temp;
-		
+
 		
 	}
 }
