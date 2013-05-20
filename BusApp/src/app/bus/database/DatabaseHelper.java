@@ -30,9 +30,10 @@ public class DatabaseHelper {
 				busLine.setBusLineNote(cur.getString(2));
 				busLine.setStationList(searchBusLineStation(busLine.getBusLineID().toString()));
 			}
+			cur.close();
 		}
 
-		cur.close();
+
 
 		mydb.close();
 		return busLine;
@@ -50,9 +51,10 @@ public class DatabaseHelper {
 			if(cur.moveToFirst()){
 				busLineName = cur.getString(1);
 			}
+			cur.close();
 		}
 
-		cur.close();
+		
 
 		mydb.close();
 		return busLineName;
@@ -98,9 +100,10 @@ public class DatabaseHelper {
             	   }
                   }while(cur.moveToNext());
             }
+        	cur.close();
         }
 
-		cur.close();
+	
 
 		mydb.close();
 		return stationList;
@@ -134,8 +137,9 @@ public class DatabaseHelper {
                 stationList.add(stationTemp);
             }while(cur.moveToNext());
            }
+       	 cur.close();
         }
-		 cur.close();
+	
 		mydb.close();
 		return stationList;
 	}
@@ -161,9 +165,10 @@ public class DatabaseHelper {
                     busStation.add(busStationTemp);
                   }while(cur.moveToNext());
             }
+            cur.close();
         }
 
-		 cur.close();
+		
 	     mydb.close();
 
 		return busStation;
@@ -182,7 +187,7 @@ public class DatabaseHelper {
 			mydb.insert("linecollection", null, values);
 			Log.i("addCollection","success");
 		}
-
+        
 	     mydb.close();
 
 	    return true;
@@ -203,9 +208,10 @@ public class DatabaseHelper {
 				String temp = cur.getString(1);
             	lineCollectionList.add(temp);
             	}while(cur.moveToNext());	
+			cur.close();
          }       
 
-		cur.close();
+		
 	    mydb.close();   
 
 		return lineCollectionList;
@@ -237,8 +243,9 @@ public class DatabaseHelper {
 		if(cur != null&&cur.moveToFirst())
         {
 			temp=true;
+			cur.close();
          }     
-		cur.close();
+	
 	    mydb.close();
 
 		return temp;
