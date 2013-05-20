@@ -31,7 +31,7 @@ public class DatabaseHelper {
 				busLine.setStationList(searchBusLineStation(busLine.getBusLineID().toString()));
 			}
 		}
-		
+		mydb.close();
 		return busLine;
 	}
     
@@ -48,6 +48,7 @@ public class DatabaseHelper {
 				busLineName = cur.getString(1);
 			}
 		}
+		mydb.close();
 		return busLineName;
 	}
 	
@@ -103,6 +104,7 @@ public class DatabaseHelper {
                   }while(cur.moveToNext());
             }
         }
+		mydb.close();
 		return stationList;
 	}
 	
@@ -155,6 +157,7 @@ public class DatabaseHelper {
                   }while(cur.moveToNext());
             }
         }
+		mydb.close();
 		return busStation;
 	}
 	public Boolean addLineCollection(String name){
@@ -173,7 +176,7 @@ public class DatabaseHelper {
 			mydb.insert("linecollection", null, values);
 			Log.i("addCollection","success");
 		}
-		
+		mydb.close();
 	    return true;
 	}
 	
@@ -193,7 +196,7 @@ public class DatabaseHelper {
             	lineCollectionList.add(temp);
             	}while(cur.moveToNext());	
          }       
-            
+		mydb.close();    
 		return lineCollectionList;
 	}
 	
@@ -205,6 +208,7 @@ public class DatabaseHelper {
             + "/user.db";
 		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READWRITE);
 		mydb.delete("linecollection", "linename=?", new String[]{name});
+		mydb.close();
 		return temp;
 	}
 	
@@ -220,6 +224,7 @@ public class DatabaseHelper {
         {
 			temp=true;
          }       
+		mydb.close();
 		return temp;
 		
 		
