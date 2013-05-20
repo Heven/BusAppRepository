@@ -31,6 +31,9 @@ public class DatabaseHelper {
 				busLine.setStationList(searchBusLineStation(busLine.getBusLineID().toString()));
 			}
 		}
+
+		cur.close();
+
 		mydb.close();
 		return busLine;
 	}
@@ -48,6 +51,9 @@ public class DatabaseHelper {
 				busLineName = cur.getString(1);
 			}
 		}
+
+		cur.close();
+
 		mydb.close();
 		return busLineName;
 	}
@@ -70,7 +76,6 @@ public class DatabaseHelper {
                 stationTemp.setLatitude(cur.getString(7));
                 stationTemp.setStationName(cur.getString(2));
                 stationTemp.addBusLine(searchBusLineByName(cur.getInt(0)));
-                stationTemp.addBusLine("、 ");
                 stationList.add(stationTemp);
                 cur.moveToNext();
                do{
@@ -80,7 +85,6 @@ public class DatabaseHelper {
             		   {
             			   flag = false;
                            stationList.get(i).addBusLine(searchBusLineByName(cur.getInt(0)));
-            		   	   stationList.get(i).addBusLine("、 ");	
             		   }		   
             	   }
             	   if(flag)
@@ -90,20 +94,14 @@ public class DatabaseHelper {
                        temp.setLatitude(cur.getString(7));
                        temp.setStationName(cur.getString(2));
                        temp.addBusLine(searchBusLineByName(cur.getInt(0)));
-                       temp.addBusLine("、 ");
                        stationList.add(temp);
             	   }
-/*            	                                       
-                   BusStation busStationTemp = new BusStation();
-                   busStationTemp.setStationNum(Integer.parseInt(cur.getString(1))); 
-                   busStationTemp.setLongitude(cur.getString(6));
-                    busStationTemp.setLatitude(cur.getString(7));
-                    busStationTemp.setStationName(cur.getString(2));
-                    busStationTemp.setBusLine(searchBusLineByName(cur.getInt(0)));
-                    busStationList.add(busStationTemp);*/
                   }while(cur.moveToNext());
             }
         }
+
+		cur.close();
+
 		mydb.close();
 		return stationList;
 	}
@@ -116,21 +114,28 @@ public class DatabaseHelper {
             + Environment.getDataDirectory().getAbsolutePath() + "/app.bus.activity"
             + "/xian.db";
 		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READONLY);
-		Cursor cur = mydb.rawQuery("select * from cnbus  where kind = ? and xzhanbd<("+la+"+0.002) and yzhanbd < ("+lon+"+0.002) ",new String[]{"1"});
+		Double left = lon-0.01;
+		Double right = lon+0.01;
+		Double left2 = la-0.01;
+		Double right2 = la+0.01;
 		
+		String query="select * from cnbus  where kind = ? and xzhanbd between "+left+" and "+right+" and yzhanbd between "+left2+" and "+right2+"";
+		Log.e("query", query);
+		Cursor cur = mydb.rawQuery(query,new String[]{"1"});
 		if(cur != null)
         {
             if(cur.moveToFirst())
             {
-            	Station stationTemp = new Station();          	  
+            do{	Station stationTemp = new Station();          	  
                 stationTemp.setLongitude(cur.getString(6));
                 stationTemp.setLatitude(cur.getString(7));
                 stationTemp.setStationName(cur.getString(2));
                 stationTemp.addBusLine(searchBusLineByName(cur.getInt(0)));
                 stationList.add(stationTemp);
-                cur.moveToNext();
+            }while(cur.moveToNext());
            }
         }
+		 cur.close();
 		mydb.close();
 		return stationList;
 	}
@@ -157,7 +162,10 @@ public class DatabaseHelper {
                   }while(cur.moveToNext());
             }
         }
-		mydb.close();
+
+		 cur.close();
+	     mydb.close();
+
 		return busStation;
 	}
 	public Boolean addLineCollection(String name){
@@ -167,8 +175,6 @@ public class DatabaseHelper {
             + Environment.getDataDirectory().getAbsolutePath() + "/app.bus.activity"
             + "/user.db";
 		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READWRITE);
-		//String sql = "create table linecollection(_id INTEGER PRIMARY KEY,linename varchar(100))";
-		//mydb.execSQL(sql);
 		if(!searchLineCollectionItem(name))
 		{
 			ContentValues values = new ContentValues();//通过ContentValues对象来传入参数
@@ -176,7 +182,9 @@ public class DatabaseHelper {
 			mydb.insert("linecollection", null, values);
 			Log.i("addCollection","success");
 		}
-		mydb.close();
+
+	     mydb.close();
+
 	    return true;
 	}
 	
@@ -196,7 +204,10 @@ public class DatabaseHelper {
             	lineCollectionList.add(temp);
             	}while(cur.moveToNext());	
          }       
-		mydb.close();    
+
+		cur.close();
+	    mydb.close();   
+
 		return lineCollectionList;
 	}
 	
@@ -208,8 +219,11 @@ public class DatabaseHelper {
             + "/user.db";
 		mydb = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READWRITE);
 		mydb.delete("linecollection", "linename=?", new String[]{name});
-		mydb.close();
+
+	    mydb.close();
+
 		return temp;
+
 	}
 	
 	public Boolean searchLineCollectionItem(String name){
@@ -223,10 +237,12 @@ public class DatabaseHelper {
 		if(cur != null&&cur.moveToFirst())
         {
 			temp=true;
-         }       
-		mydb.close();
+         }     
+		cur.close();
+	    mydb.close();
+
 		return temp;
-		
+
 		
 	}
 }

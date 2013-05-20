@@ -33,7 +33,7 @@
                  <activity android:name=".LineInfoActivity" >
         </activity>
        
-           <activity android:name=".FweiBusLineSearch" > </activity>
+           <activity android:name=".BusLineSearch" > </activity>
         
     </application>
 
