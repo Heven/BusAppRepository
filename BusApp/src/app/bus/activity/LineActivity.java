@@ -53,8 +53,10 @@ public class LineActivity extends Activity{
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					Intent gaodeIntent = new Intent();
-					String busLine = busLineName.getText().toString();
-					
+					String busLine = "45路";
+					if(! busLineName.getText().toString().trim().equals("")){
+						busLine = busLineName.getText().toString();
+					}
 					//传值
 					gaodeIntent.putExtra("busname", busLine);
 					gaodeIntent.setClass(LineActivity.this, BusLineSearch.class);
@@ -69,7 +71,10 @@ public class LineActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-			    String busLine = busLineName.getText().toString();
+				String busLine = "45路";
+				if(! busLineName.getText().toString().trim().equals("")){
+					busLine = busLineName.getText().toString();
+				}
 				DatabaseHelper helper = new DatabaseHelper();
 				BusLine temp = helper.searchBusLine(busLine);
 				String result="";

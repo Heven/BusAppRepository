@@ -14,6 +14,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -72,6 +73,7 @@ public class BusLineSearch extends MapActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);   
 		setContentView(R.layout.bussearch);
 		
 		mMapView = ((MapView) findViewById(R.id.buslinesearchmapview));

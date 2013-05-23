@@ -29,12 +29,17 @@ public class BusStationActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bus_station);
 		busStationName = (EditText)findViewById(R.id.stationname_search);
+		
 		busStationResult = (TextView)findViewById(R.id.stationsearch);
 		busStationSearch = (Button)findViewById(R.id.stationsearch);
 		busStationSearch.setOnClickListener(new OnClickListener() {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			String busStation = busStationName.getText().toString();
+			String busStation= "ศýวล";
+			if(!busStationName.getText().toString().trim().equals(""))
+			{
+				busStation = busStationName.getText().toString();
+			}
 			DatabaseHelper helper = new DatabaseHelper();
 			ArrayList<Station> temp = helper.searchBusStation(busStation);
 			String result="";
