@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import app.bus.activity.LineInfoActivity;
 import app.bus.activity.R;
+
 import app.bus.database.DatabaseHelper;
 
 public class CollectionLineAdapter extends  BaseAdapter{

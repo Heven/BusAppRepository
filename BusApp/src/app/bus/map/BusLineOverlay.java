@@ -3,6 +3,7 @@ package app.bus.map;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,6 +25,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import app.bus.activity.R;
+
 
 import com.amap.mapapi.busline.BusLineItem;
 import com.amap.mapapi.core.GeoPoint;

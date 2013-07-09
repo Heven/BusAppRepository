@@ -28,7 +28,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import app.bus.activity.R;
+
 
 import com.amap.mapapi.busline.BusLineItem;
 import com.amap.mapapi.busline.BusPagedResult;

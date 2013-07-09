@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import app.bus.activity.R;
 import app.bus.database.BusStation;
 
@@ -53,6 +54,7 @@ public class StationListAdapter extends BaseAdapter{
 		BusStation temp = stationList.get(position);
 		TextView name = (TextView) convertView.findViewById(R.id.stationname);
 		name.setText(temp.getStationName());
+		
 		return convertView;
 	}
 
